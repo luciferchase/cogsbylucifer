@@ -10,28 +10,27 @@ BaseCog = getattr(commands, "Cog", object)
 
 class IPL(BaseCog):
 	"""IPL"""
-	def __init__(self, bot):
-		with open("C:/Users/udit2/Codes/Python Code/cogsbylucifer/ipl/settings.json", "r+") as settings:
-			self.settings_data = json.load(settings)
-
-		self.config = Config.get_conf(self)
-
-		self.api = "https://cricapi.com/api/"
-		self.api_endpoint = ["matches"]
-		self.api_key = settings_data["api_key"]
-		self.api_hits = settings_data["api_hits"]
-
-	@commands.group(invoke_without_command = True)
 	@commands.bot_has_permissions(embed_links = True)
+	@commands.command()
 	async def ipl(self, ctx):
-		
-		if (date.today() > settings_data["matches"]["last_requested"]):
-			settings_data["api_limit"] = 0
-			settings_data["matches"]["last_requested"] = date.today()
-			settings_data["matches"]["last_match_id"] += 1
 
-			with open("settings.json", "w") as settings:
-				json.dump(settings_data, settings)
+		with open("C:/Users/udit2/Codes/Python Code/cogsbylucifer/ipl/config.json", "r+") as config:
+			global config_data
+			config_data = json.load(config)
+		print(config_data)
+
+		api = "https://cricapi.com/api/"
+		api_endpoint = ["matches"]
+		api_key = config_data["api_key"]
+		api_hits = config_data["api_hits"]
+
+		if (str(date.today()) > config_data["matches"]["last_requested"]):
+			config_data["api_limit"] = 0
+			config_data["matches"]["last_requested"] = str(date.today())
+			config_data["matches"]["last_match_id"] += 1
+
+			with open("config.json", "w") as config:
+				json.dump(config_data, config)
 
 			response = requests.get(f"{api}{api_endpoint}?{api_key}")
 
@@ -39,11 +38,8 @@ class IPL(BaseCog):
 				json_object = json.dumps(response.json(), indent = 2)
 				matches.write(json_object)
 
-		with open("settings.json", "r") as settings:
-			settings_data = json.load(settings)
-
-		last_match_id = settings_data["last_match_id"]
-		with open("matches.json", "r") as matches:
+		last_match_id = config_data["matches"]["last_match_id"]
+		with open("C:/Users/udit2/Codes/Python Code/cogsbylucifer/ipl/matches.json", "r") as matches:
 			data = json.load(matches)
 
 			for i in data["matches"]:
@@ -51,15 +47,35 @@ class IPL(BaseCog):
 					last_match_details = i
 				elif (i["unique_id"] == last_match_id + 1):
 					upcoming_match_details = i
-
+		image_url = {
+			"Kolkata Knight Riders": "https://hdsportsnews.com/wp-content/uploads/2020/01/kolkata-knight-riders-kkr-2020-team-squad-players-live-score-time-table-point-table-schedule-auction-match-fixture-venue-highlight-1280x720.jpg",
+			"Rajasthan Royals": "https://cdn5.newsnationtv.com/images/2021/02/22/royal-rajasthan-logo-70.jpg",
+			"Royal Challengers Bangalore": "https://english.sakshi.com/sites/default/files/article_images/2020/11/8/RCB-Logo_571_855-1604821493.jpg",
+			"Mumbai Indians": "https://static.india.com/wp-content/uploads/2017/03/mumbai.jpg?impolicy=Medium_Resize&w=1200&h=800",
+			"Punjab Kings": "https://awaj.in/wp-content/uploads/2021/03/20210317_222651.jpg",
+			"Sunrisers Hyderabad": "https://2.bp.blogspot.com/-6cAZUQMFCqc/WwKFUZrPPmI/AAAAAAAACcM/TryzryihpEkoOMd6htpE8LjIH1r02FWSgCLcBGAs/s1600/SRH.jpg",
+			"Chennai Super Kings": "https://i.pinimg.com/originals/85/52/f8/8552f811e95b998d9505c43a9828c6d6.jpg",
+			"Delhi Capitals": "https://d3pc1xvrcw35tl.cloudfront.net/ln/images/686x514/teamsinnerintrodc534x432-resize-534x432-a7542dd51f-d979030f10e79596_202009106828.jpeg"
+		}
 		embed = discord.Embed(
-			color = await self.bot.get_embed_color(ctx.channel),
+			color = 0x25dbf4,
 			title = "Matches",
-			timestamp = date.today(),
 		)
+
+		embed.add_field(
+			name = "Next Match", 
+			value = f'{upcoming_match_details["team-1"]} \nvs \n{upcoming_match_details["team-2"]}',
+			inline = False
+		)
+		if (calendar.day_name[date.today().weekday()] in ["Saturday", "Sunday"]):
+			embed.add_field(
+			name = "Match 2", 
+			value = f'{["team-1"]} vs {["team-2"]}',
+			inline = False
+			)
 		embed.add_field(
 			name = "Last Match",
-			value = f'{last_match_details["team-1"]} vs {last_match_details["team-2"]}',
+			value = f'{last_match_details["team-1"]} \nvs \n{last_match_details["team-2"]}',
 			inline = True
 		)
 		embed.add_field(
@@ -67,19 +83,6 @@ class IPL(BaseCog):
 			value = f'{last_match_details["winner_team"]}',
 			inline = True
 		)
-		embed.add_field(
-			name = "Next Match", 
-			value = f'{["team-1"]} vs {["team-2"]}',
-			inline = False
-		)
-
-		if (calendar.day_name[date.today().weekday()] in ["Saturday", "Sunday"]):
-			embed.add_field(
-			name = "Match 2", 
-			value = f'{["team-1"]} vs {["team-2"]}',
-			inline = False
-			)
-
-		embed.set_image(url = "https://i.pinimg.com/originals/a2/20/30/a220301dbfa84edd4ffc6ce9bb528841.png")
+		embed.set_image(url = image_url[last_match_details["winner_team"]])
 		await ctx.send(embed = embed)
 
