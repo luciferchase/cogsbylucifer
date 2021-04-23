@@ -1,71 +1,15 @@
 {
   "matches": [
     {
-      "unique_id": 1254072,
-      "date": "2021-04-21T00:00:00.000Z",
-      "dateTimeGMT": "2021-04-21T14:00:00.000Z",
-      "team-1": "Kolkata Knight Riders",
-      "team-2": "Chennai Super Kings",
-      "squad": true,
-      "toss_winner_team": "Kolkata Knight Riders",
-      "winner_team": "Chennai Super Kings",
-      "matchStarted": true,
-      "type": ""
-    },
-    {
-      "unique_id": 1254071,
-      "date": "2021-04-21T00:00:00.000Z",
-      "dateTimeGMT": "2021-04-21T10:00:00.000Z",
-      "team-1": "Punjab Kings",
-      "team-2": "Sunrisers Hyderabad",
-      "squad": true,
-      "toss_winner_team": "Punjab Kings",
-      "winner_team": "Sunrisers Hyderabad",
-      "matchStarted": true,
-      "type": ""
-    },
-    {
-      "unique_id": 1255828,
-      "date": "2021-04-21T00:00:00.000Z",
-      "dateTimeGMT": "2021-04-21T04:30:00.000Z",
-      "team-1": "Sri Lanka",
-      "team-2": "Bangladesh",
-      "type": "Tests",
-      "squad": true,
-      "toss_winner_team": "Bangladesh",
-      "matchStarted": true
-    },
-    {
-      "unique_id": 1257183,
-      "date": "2021-04-21T00:00:00.000Z",
-      "dateTimeGMT": "2021-04-21T09:00:00.000Z",
-      "team-1": "Zimbabwe",
-      "team-2": "Pakistan",
-      "type": "Twenty20",
-      "squad": true,
-      "toss_winner_team": "Zimbabwe",
-      "winner_team": "Pakistan",
-      "matchStarted": true
-    },
-    {
-      "unique_id": 1257949,
-      "date": "2021-04-21T00:00:00.000Z",
-      "dateTimeGMT": "2021-04-21T06:30:00.000Z",
-      "team-1": "Malaysia",
-      "team-2": "Netherlands",
-      "type": "Twenty20",
-      "squad": true,
-      "toss_winner_team": "Malaysia",
-      "matchStarted": true
-    },
-    {
       "unique_id": 1254073,
       "date": "2021-04-22T00:00:00.000Z",
       "dateTimeGMT": "2021-04-22T14:00:00.000Z",
       "team-1": "Royal Challengers Bangalore",
       "team-2": "Rajasthan Royals",
       "squad": true,
-      "matchStarted": false,
+      "toss_winner_team": "Royal Challengers Bangalore",
+      "winner_team": "Royal Challengers Bangalore",
+      "matchStarted": true,
       "type": ""
     },
     {
@@ -75,8 +19,9 @@
       "team-1": "Worcestershire",
       "team-2": "Nottinghamshire",
       "type": "First-class",
+      "toss_winner_team": "Worcestershire",
       "squad": false,
-      "matchStarted": false
+      "matchStarted": true
     },
     {
       "unique_id": 1244238,
@@ -85,8 +30,9 @@
       "team-1": "Warwickshire",
       "team-2": "Essex",
       "type": "First-class",
+      "toss_winner_team": "Essex",
       "squad": false,
-      "matchStarted": false
+      "matchStarted": true
     },
     {
       "unique_id": 1244233,
@@ -95,8 +41,9 @@
       "team-1": "Sussex",
       "team-2": "Yorkshire",
       "type": "First-class",
+      "toss_winner_team": "Yorkshire",
       "squad": false,
-      "matchStarted": false
+      "matchStarted": true
     },
     {
       "unique_id": 1244240,
@@ -105,8 +52,9 @@
       "team-1": "Northamptonshire",
       "team-2": "Glamorgan",
       "type": "First-class",
+      "toss_winner_team": "Northamptonshire",
       "squad": false,
-      "matchStarted": false
+      "matchStarted": true
     },
     {
       "unique_id": 1244239,
@@ -115,8 +63,9 @@
       "team-1": "Middlesex",
       "team-2": "Surrey",
       "type": "First-class",
+      "toss_winner_team": "Middlesex",
       "squad": false,
-      "matchStarted": false
+      "matchStarted": true
     },
     {
       "unique_id": 1244241,
@@ -125,8 +74,9 @@
       "team-1": "Leicestershire",
       "team-2": "Somerset",
       "type": "First-class",
+      "toss_winner_team": "Leicestershire",
       "squad": false,
-      "matchStarted": false
+      "matchStarted": true
     },
     {
       "unique_id": 1244235,
@@ -135,8 +85,9 @@
       "team-1": "Kent",
       "team-2": "Lancashire",
       "type": "First-class",
+      "toss_winner_team": "Kent",
       "squad": false,
-      "matchStarted": false
+      "matchStarted": true
     },
     {
       "unique_id": 1244237,
@@ -145,8 +96,9 @@
       "team-1": "Hampshire",
       "team-2": "Gloucestershire",
       "type": "First-class",
+      "toss_winner_team": "Hampshire",
       "squad": false,
-      "matchStarted": false
+      "matchStarted": true
     },
     {
       "unique_id": 1244234,
@@ -155,8 +107,9 @@
       "team-1": "Durham",
       "team-2": "Derbyshire",
       "type": "First-class",
+      "toss_winner_team": "Durham",
       "squad": false,
-      "matchStarted": false
+      "matchStarted": true
     },
     {
       "unique_id": 1257950,
@@ -166,7 +119,9 @@
       "team-2": "Malaysia",
       "type": "Twenty20",
       "squad": true,
-      "matchStarted": false
+      "toss_winner_team": "Malaysia",
+      "winner_team": "Nepal",
+      "matchStarted": true
     },
     {
       "unique_id": 1257995,
@@ -175,8 +130,10 @@
       "team-1": "Mid West Rhinos",
       "team-2": "Southern Rocks",
       "type": "First-class",
+      "toss_winner_team": "Mid West Rhinos",
+      "winner_team": "Mid West Rhinos",
       "squad": false,
-      "matchStarted": false
+      "matchStarted": true
     },
     {
       "unique_id": 1257994,
@@ -185,8 +142,10 @@
       "team-1": "Mashonaland Eagles",
       "team-2": "Matabeleland Tuskers",
       "type": "First-class",
+      "toss_winner_team": "Mashonaland Eagles",
+      "winner_team": "Matabeleland Tuskers",
       "squad": false,
-      "matchStarted": false
+      "matchStarted": true
     },
     {
       "unique_id": 1254074,
@@ -242,10 +201,10 @@
       "unique_id": 1257951,
       "date": "2021-04-24T00:00:00.000Z",
       "dateTimeGMT": "2021-04-24T07:30:00.000Z",
-      "team-1": "TBA",
-      "team-2": "TBA",
+      "team-1": "Nepal",
+      "team-2": "Netherlands",
       "type": "Twenty20",
-      "squad": false,
+      "squad": true,
       "matchStarted": false
     },
     {
@@ -2408,11 +2367,11 @@
     }
   ],
   "v": "1",
-  "ttl": 42,
+  "ttl": 73,
   "provider": {
     "source": "Various",
     "url": "https://cricapi.com/",
-    "pubDate": "2021-04-22T04:48:46.468Z"
+    "pubDate": "2021-04-23T02:53:00.477Z"
   },
-  "creditsLeft": 248
+  "creditsLeft": 244
 }
