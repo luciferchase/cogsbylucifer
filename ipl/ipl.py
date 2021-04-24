@@ -1,18 +1,17 @@
 import discord
-from redbot.core import commands, Config
+from redbot.core import commands
 import requests
 import json
 from datetime import date
 import calendar
 
 BaseCog = getattr(commands, "Cog", object)
-# bot = commands.Bot(command_prefix = "luci ")
 
 class IPL(BaseCog):
 	def __init__(self, bot):
 		self.bot = bot
 
-		with open("C:/Users/udit2/Codes/Python Code/cogsbylucifer/test/config.json", "r+") as config:
+		with open("C:/Users/udit2/Codes/Python Code/cogsbylucifer/ipl/config.json", "r+") as config:
 			self.config_data = json.load(config)
 
 		self.api = "https://cricapi.com/api/"
@@ -23,18 +22,18 @@ class IPL(BaseCog):
 			self.config_data["matches"]["last_requested"] = str(date.today())
 			self.config_data["matches"]["last_match_id"] += 1
 
-			with open("C:/Users/udit2/Codes/Python Code/cogsbylucifer/test/config.json", "w") as config:
+			with open("C:/Users/udit2/Codes/Python Code/cogsbylucifer/ipl/config.json", "w") as config:
 				json.dump(self.config_data, config, indent = 4)
 
 			response = requests.get(f"{api}{api_endpoint[0]}?apikey={api_key}")
 
 			with open(\
-				"C:/Users/udit2/Codes/Python Code/cogsbylucifer/test/matches.json", "w") as matches:
+				"C:/Users/udit2/Codes/Python Code/cogsbylucifer/ipl/matches.json", "w") as matches:
 				json.dump(response.json(), matches, indent = 2)
 
 		self.last_match_id = self.config_data["matches"]["last_match_id"]
 
-		with open("C:/Users/udit2/Codes/Python Code/cogsbylucifer/test/matches.json", "r") as matches:
+		with open("C:/Users/udit2/Codes/Python Code/cogsbylucifer/ipl/matches.json", "r") as matches:
 			data = json.load(matches)
 
 			for match in data["matches"]:
@@ -61,6 +60,8 @@ class IPL(BaseCog):
 	@commands.bot_has_permissions(embed_links = True)
 	@commands.command()
 	async def ipl(self, ctx):
+		""" Get details of last match played, winner and the next match
+		"""
 
 		embed = discord.Embed(
 			color = 0x25dbf4,
@@ -93,8 +94,10 @@ class IPL(BaseCog):
 		await ctx.send(embed = embed)
 
 	@commands.bot_has_permissions(embed_links = True)
-	@commands.command()
+	@commands.command(hidden = True)
 	async def predict(self, ctx):
+		""" Poll for today's match
+		"""
 		await ctx.send("@everyone")
 
 		embed = discord.Embed(
@@ -114,12 +117,14 @@ class IPL(BaseCog):
 		self.config_data["predict"]["embed_id"] = last_embed.id
 		self.config_data["predict"]["channel_id"] = last_embed.channel.id
 
-		with open("C:/Users/udit2/Codes/Python Code/cogsbylucifer/test/config.json", "w") as config:
+		with open("C:/Users/udit2/Codes/Python Code/cogsbylucifer/ipl/config.json", "w") as config:
 			json.dump(self.config_data, config, indent = 4)
 
 	@commands.bot_has_permissions(embed_links = True)
-	@commands.command()
+	@commands.command(hidden = True)
 	async def points(self, ctx):
+		""" Update Standings for Sattebaaz Championship
+		"""
 
 		channel = self.bot.get_channel(self.config_data["predict"]["channel_id"])
 		last_embed = await channel.fetch_message(self.config_data["predict"]["embed_id"])
@@ -142,7 +147,7 @@ class IPL(BaseCog):
 				self.config_data["predict"]["users"][user] += 10
 				winners.append(user)
 
-		with open("C:/Users/udit2/Codes/Python Code/cogsbylucifer/test/config.json", "w") as config:
+		with open("C:/Users/udit2/Codes/Python Code/cogsbylucifer/ipl/config.json", "w") as config:
 			json.dump(self.config_data, config, indent = 4)
 
 		embed = discord.Embed(
@@ -196,6 +201,8 @@ class IPL(BaseCog):
 
 	@commands.command()
 	async def standings(self, ctx):
+		""" See current standings of Sattebaaz Championship
+		"""
 		
 		points = {}
 		for user in self.config_data["predict"]["users"]:
