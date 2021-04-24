@@ -25,7 +25,7 @@ class IPL(BaseCog):
 			with open("C:/Users/udit2/Codes/Python Code/cogsbylucifer/ipl/config.json", "w") as config:
 				json.dump(self.config_data, config, indent = 4)
 
-			response = requests.get(f"{api}{api_endpoint[0]}?apikey={api_key}")
+			response = requests.get(f"{self.api}{self.api_endpoint[0]}?apikey={self.api_key}")
 
 			with open(\
 				"C:/Users/udit2/Codes/Python Code/cogsbylucifer/ipl/matches.json", "w") as matches:
@@ -73,10 +73,10 @@ class IPL(BaseCog):
 			\n{self.upcoming_match_details["team-2"]}',
 			inline = False
 		)
-		if (calendar.day_name[date.today().weekday()] in ["Saturday", "Sunday"]):
+		if (calendar.day_name[date.today().weekday()] == "Sunday"):
 			embed.add_field(
 			name = "Match 2", 
-			value = f'{upcoming_match_details_2["team-1"]} vs {upcoming_match_details_2["team-2"]}',
+			value = f'{self.upcoming_match_details_2["team-1"]} vs {self.upcoming_match_details_2["team-2"]}',
 			inline = False
 			)
 		embed.add_field(
