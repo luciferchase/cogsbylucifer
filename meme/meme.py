@@ -2,36 +2,55 @@ import discord
 from redbot.core import commands
 import requests
 import json
+import random
+import logging
 
 BaseCog = getattr(commands, "Cog", object)
 
 class Meme(BaseCog):
+	""" Get memes.
+	"""
+	
 	def __init__(self):
-		self.api = "https://meme-api.herokuapp.com/gimme"
-
+		self.log = logging.getLogger("red.cogsbylucifer.photo")
+		self.dog_api = "https://api.thedogapi.com/v1/images/search"
+	
 	@commands.command()
 	async def meme(self, ctx, endpoint = ""):
-		""" Get a meme from reddit
+		""" Get a meme from reddit. 
+			To Get a meme from a specific subreddit, append its name after the command
+			For eg. `luci meme wholesomememes`
 		"""
+		api = "https://meme-api.herokuapp.com/gimme"
 		if (endpoint != ""):
-			response = requests.get(self.api + "/" + endpoint).json()
+			response = requests.get(api + "/" + endpoint).json()
 		else:
-			response = requests.get(self.api + "/" + "dankmemes").json()
+			response = requests.get(api + "/" + "dankmemes").json()
 
+		if ("code" in response):
+			self.log.info(f"Subreddit Requested: {endpoint}")
+			self.log.error(f'Status Code: {response["code"]}')
+			self.log.error(f'Error: {response["message"]}')
 
-		if ("code" in response.keys()):
+			response_dog = requests.get(self.dog_api).json()[0]
+
 			embed = discord.Embed(
-				title = response["message"],
-				color = 0xea1010
+				title = "Bruh...",
+				color = 0xea1010						# Red
 			)
-			embed.set_image(url = f"https://http.cat/{response['code']}")
+			embed.add_field(
+				name = response["message"],
+				value = "Try again maybe? Anyway here is a cute doggo ❤"
+			)
+			embed.set_image(url = response_dog["url"])
 			await ctx.send(embed = embed)
 			return
+		
 		elif (response["nsfw"]):
 			response = requests.get(self.api)
 		
 		embed = discord.Embed(
-			color = 0x06f9f5,
+			color = 0x06f9f5,							# Blue-ish
 			title = response["title"],
 			url = response["postLink"]
 		)
