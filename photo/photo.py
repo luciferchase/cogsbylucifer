@@ -12,6 +12,8 @@ class Photo(BaseCog):
 	def __init__(self):
 		self.log = logging.getLogger("red.cogsbylucifer.photo")
 		self.dog_api = "https://api.thedogapi.com/v1/images/search"
+		self.cat_api = "https://api.thecatapi.com/v1/images/search"
+		self.fox_api = "https://randomfox.ca/floof/"
 
 		with open("C:/Users/udit2/Codes/Python Code/cogsbylucifer/photo/config.json", "r") as config:
 			config_data = json.load(config)
@@ -125,3 +127,42 @@ class Photo(BaseCog):
 		await wallpaper.add_reaction("❤️")
 		await wallpaper.add_reaction("👍")
 		await wallpaper.add_reaction("👎")
+
+	@commands.command()
+	async def dog(self, ctx):
+		""" Get a random dog pic
+		"""
+		response = requests.get(self.dog_api).json()[0]
+
+		embed = discord.Embed(
+			title = "Here is a cute doggo ❤",
+			color = await ctx.embed_color()			# Red
+		)
+		embed.set_image(url = response["url"])
+		await ctx.send(embed = embed)
+	
+	@commands.command()
+	async def cat(self, ctx):
+		""" Get a random cat pic
+		"""
+		response = requests.get(self.cat_api).json()[0]
+
+		embed = discord.Embed(
+			title = "Here is a cute cat ❤",
+			color = await ctx.embed_color()			# Red
+		)
+		embed.set_image(url = response["url"])
+		await ctx.send(embed = embed)
+	
+	@commands.command()
+	async def fox(self, ctx):
+		""" Get a random fox pic
+		"""
+		response = requests.get(self.fox_api).json()
+
+		embed = discord.Embed(
+			title = "Here is a cute fox ❤",
+			color = await ctx.embed_color()			# Red
+		)
+		embed.set_image(url = response["image"])
+		await ctx.send(embed = embed)

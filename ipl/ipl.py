@@ -31,11 +31,12 @@ class IPL(BaseCog):
 		if (calendar.day_name[date.today().weekday()] == "Sunday" \
 			and str(datetime.now().time())[:5] >= "19:30"):
 			self.params_score["unique_id"] += 1
+			self.config_data["matches"]["last_match_id"] += 1
 
 		if (str(date.today()) > self.config_data["matches"]["last_requested"]):
 			self.config_data["matches"]["last_requested"] = str(date.today())
 			self.config_data["matches"]["last_match_id"] += 1
-			self.config_data["rate_limit"] = 2
+			self.config_data["rate_limit"] = 1
 
 			with open("C:/Users/udit2/Codes/Python Code/cogsbylucifer/ipl/config.json", "w") as config:
 				json.dump(self.config_data, config, indent = 4)
@@ -125,6 +126,32 @@ class IPL(BaseCog):
 		if (match == 2):
 			self.upcoming_match_details = self.upcoming_match_details_2
 
+			channel = self.bot.get_channel(self.config_data["predict"]["channel_id"])
+			last_embed = await channel.fetch_message(self.config_data["predict"]["embed_id"])
+			emoji_a = []
+			emoji_b = []
+			winners = []
+			for reaction in last_embed.reactions:
+				async for user in reaction.users():
+					if (reaction.emoji == "🇦" and user.id != 829537216224165888):
+						emoji_a.append(str(user.id))
+					elif (reaction.emoji == "🇧" and user.id != 829537216224165888):
+						emoji_b.append(str(user.id))
+
+			if (self.last_match_details["winner_team"] == self.last_match_details["team-1"]):
+				for user in emoji_a:
+					self.config_data["predict"]["users"][user] += 10
+					username = await self.bot.fetch_user(user)
+					winners.append(username)
+			else:
+				for user in emoji_b:
+					self.config_data["predict"]["users"][user] += 10
+					username = await self.bot.fetch_user(user)
+					winners.append(username)
+
+			with open("C:/Users/udit2/Codes/Python Code/cogsbylucifer/ipl/config.json", "w") as config:
+				json.dump(self.config_data, config, indent = 4)
+
 		embed = discord.Embed(
 			color = 0x19f0e2,						# Cyan
 			title = "Sattebaaz Championship",
@@ -189,7 +216,7 @@ class IPL(BaseCog):
 		)
 		embed.add_field(
 			name = "Winning sattebaaz",
-			value = f"`{await self.bot.fetch_user(user)}`",
+			value = "{}".format("n".join(winners)),
 			inline = False
 		)
 
@@ -293,6 +320,8 @@ class IPL(BaseCog):
 		data = response.json()
 
 		if (data["matchStarted"] == False):
+			response_dog = requests.get(self.dog_api).json()[0]
+
 			embed = discord.Embed(
 				title = "Bruh...",
 				color = 0xea1010			# Red
@@ -301,7 +330,7 @@ class IPL(BaseCog):
 				name = "The match has not even started yet 🤦‍♂️",
 				value = "Wait till the match starts? Anyway here is a cute doggo ❤"
 			)
-			embed.set_image(url = response["url"])
+			embed.set_image(url = response_dog["url"])
 			await ctx.send(embed = embed)
 			return
 		
