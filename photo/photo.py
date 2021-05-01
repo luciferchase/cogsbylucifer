@@ -113,7 +113,7 @@ class Photo(BaseCog):
 		await ctx.send(embed = embed)
 
 	@commands.command()
-	async def bingwallpaper(self, ctx):
+	async def wallpaper(self, ctx):
 		""" Get Bing's daily wallpaper of the day
 		"""
 		api = "https://www.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1&mkt=en-IN"
